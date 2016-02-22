@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">BluetoothController</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_lights">LightsActivity</string>
+    <string name="title_activity_select_device">SelectDevice</string>
+
+
+    <string name="connect">Połącz z urządzeniem</string>
+    <string name="greetings">Steruj inteligentnie</string>
+    <string name="lights_str">Steruj światłami</string>
+    <string name="horn_str">Steruj dźwiękiem</string>
+    <string name="gate_str">Steruj bramą</string>
+    <string name="blinds_str">Steruj roletami</string>
+    <string name="on">włącz</string>
+    <string name="off">wyłącz</string>
+
+
+</resources>

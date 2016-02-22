@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#323B55"
+    tools:context="agh.luk.verbosebt.main.LightsActivity"
+    android:id="@+id/aint">
+
+    <TextView
+        android:id="@+id/light_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:text="Steruj mediami"
+        android:textSize="40sp"
+        android:layout_marginTop="84dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/light_button_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="150sp"
+        android:text="@string/off"
+        android:layout_alignBottom="@+id/status_text"
+        android:layout_toRightOf="@+id/light_button_on"
+        android:layout_toEndOf="@+id/light_button_on" />
+
+    <Button
+        android:id="@+id/light_button_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="150sp"
+        android:text="@string/on"
+        android:layout_alignBottom="@+id/status_text"
+        android:layout_alignLeft="@+id/light_text"
+        android:layout_alignStart="@+id/light_text" />
+
+    <TextView
+        android:id="@+id/status_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="-"
+        android:textColor="#ffffff"
+        android:textSize="0sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="35dp" />
+
+    <ImageView
+        android:id="@+id/status_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:src="@drawable/onn"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>
