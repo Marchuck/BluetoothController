@@ -13,6 +13,7 @@
     <string name="blinds_str">Steruj roletami</string>
     <string name="on">włącz</string>
     <string name="off">wyłącz</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
 
 
 </resources>
