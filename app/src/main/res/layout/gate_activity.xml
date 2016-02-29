@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#323B55"
-    tools:context="agh.luk.verbosebt.main.LightsActivity"
     android:id="@+id/aint">
 
     <TextView

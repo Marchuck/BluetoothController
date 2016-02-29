@@ -1,0 +1,21 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/aint"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#323B55">
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="100sp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/SEND"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText"
+        android:layout_centerHorizontal="true"
+        android:text="SEND" />
+</RelativeLayout>

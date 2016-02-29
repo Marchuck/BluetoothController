@@ -27,7 +27,7 @@ public class MediaFragment extends Fragment {
 
      @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v  = inflater.inflate(R.layout.media_activity, null, false);
+        View v  = inflater.inflate(R.layout.media_activity, container, false);
 
         ImageView imview = (ImageView) v .findViewById(R.id.status_image);
          char ch = Core.instance.getLastSound();

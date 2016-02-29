@@ -12,9 +12,11 @@ import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import pl.agh.kamil.bluetoothcontroller.Core;
 import pl.agh.kamil.bluetoothcontroller.R;
 import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.LaunchBluetoothFragment;
 import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.LeftItemsFragment;
+import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.controllerFragments.EditTextFragment;
 import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.controllerFragments.GateFragment;
 import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.controllerFragments.Lights1Fragment;
 import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.controllerFragments.LightsFragment;
@@ -42,6 +44,7 @@ public class DrawerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_drawer);
         ButterKnife.bind(this);
         blueDuff = new BlueDuff();
+        Core.instance.blueDuff = blueDuff;
         initAllFragments();
         setupDrawer();
         setTitle("Smart house");
@@ -53,15 +56,13 @@ public class DrawerActivity extends AppCompatActivity {
                 .replace(R.id.content, LaunchBluetoothFragment.newInstance())
                 .commitAllowingStateLoss();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.rightContent, LaunchBluetoothFragment.newInstance())
+                .replace(R.id.rightContent, EditTextFragment.newInstance())
                 .commitAllowingStateLoss();
 
     }
 
     private void setupDrawer() {
         drawerLayout.setDrawerElevation(10f);
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
-//        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.LEFT);
         drawerLayout.setDrawerListener(new CustomDrawerListener() {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -134,13 +135,13 @@ public class DrawerActivity extends AppCompatActivity {
         Log.d(TAG, "switchToFragment: ");
         android.support.v4.app.Fragment fr;
         String name = itemToControl.name;
-        if (name.equals("lights")) {
-            fr = GateFragment.newInstance();
-        } else if (name.equals("lights")) {
+        if (name.equals("kuchnia")) {
             fr = LightsFragment.newInstance();
+        } else if (name.equals("dupa")) {
+            fr = Lights1Fragment.newInstance();
         } else if (name.equals("media")) {
             fr = MediaFragment.newInstance();
-        } else if (name.equals("gate")) {
+        } else if (name.equals("water")) {
             fr = GateFragment.newInstance();
         } else {
             fr = Lights1Fragment.newInstance();

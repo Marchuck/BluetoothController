@@ -27,7 +27,7 @@ public class LightsFragment extends Fragment {
 
      @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v  = inflater.inflate(R.layout.activity_lights, null, false);
+        View v  = inflater.inflate(R.layout.activity_lights, container, false);
 
         ImageView imview = (ImageView) v .findViewById(R.id.status_image);
          char ch = Core.instance.getLastLight();

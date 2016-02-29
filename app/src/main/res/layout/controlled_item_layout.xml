@@ -8,29 +8,11 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="48sp"
         android:padding="10sp"
         android:text="lights"
         android:textSize="20sp" />
 
-    <android.support.v7.widget.SwitchCompat
-        android:id="@+id/switch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:padding="20sp" />
-
-    <TextView
-        android:id="@+id/state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/switch1"
-        android:padding="10sp"
-        android:text="off"
-        android:textSize="20sp" />
 
 </RelativeLayout>

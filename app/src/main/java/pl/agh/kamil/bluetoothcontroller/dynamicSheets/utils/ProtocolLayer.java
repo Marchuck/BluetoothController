@@ -24,6 +24,7 @@ public class ProtocolLayer {
         String[] splitted1 = str.split(";");
         for (String s1 : splitted1) {
             String s2[] = s1.split(",");
+            if (s2.length < 5) continue;
             String nazwa = s2[0];
             String triggerOn = s2[1];
             String triggerOff = s2[2];

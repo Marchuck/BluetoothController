@@ -24,7 +24,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="left"
         android:background="@android:color/holo_blue_light"
-        android:gravity="left"
         android:scrollbars="vertical" />
 
     <RelativeLayout
@@ -33,6 +32,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="right"
         android:background="@android:color/holo_red_light"
-        android:gravity="right"
-        android:scrollbars="vertical" />
+         android:scrollbars="vertical" />
 </android.support.v4.widget.DrawerLayout>
