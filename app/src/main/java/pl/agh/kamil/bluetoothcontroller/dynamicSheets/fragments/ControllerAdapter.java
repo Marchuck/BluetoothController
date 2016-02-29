@@ -1,76 +1,72 @@
 package pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pl.agh.kamil.bluetoothcontroller.R;
-import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.dummy.DummyContent.ItemToControl;
+import pl.agh.kamil.bluetoothcontroller.dynamicSheets.utils.ItemToControl;
+import pl.agh.kamil.bluetoothcontroller.dynamicSheets.utils.ProtocolLayer;
 
 public class ControllerAdapter extends RecyclerView.Adapter<ControllerAdapter.ViewHolder> {
 
-    private final List<ItemToControl> mValues;
-    private final LeftItemsFragment.ListInterface mListener;
+    public interface SendValueCallback {
+        void sendState(ItemToControl itemToControl);
+    }
 
-    public ControllerAdapter(List<ItemToControl> items, LeftItemsFragment.ListInterface listener) {
-        mValues = items;
-        mListener = listener;
+    SendValueCallback sendValueCallback;
+    List<ItemToControl> dataSet = new ArrayList<>();
+
+    public ControllerAdapter(List<ItemToControl> items, @NonNull SendValueCallback sendValueCallback) {
+        dataSet.addAll(items);
+        this.sendValueCallback = sendValueCallback;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_item, parent, false);
+                .inflate(R.layout.controlled_item_layout, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final ItemToControl item = dataSet.get(position);
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.name.setText(dataSet.get(position).name);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onClicked(holder.mItem);
-                }
+                sendValueCallback.sendState(item);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return dataSet.size();
     }
 
     public void bindWithData(byte[] data) {
 
+        List<ItemToControl> itemsToControl = ProtocolLayer.createNewControllers(data);
+        dataSet.addAll(itemsToControl);
+        notifyItemRangeChanged(0, getItemCount());
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public ItemToControl mItem;
+        public TextView name;
 
-        public ViewHolder(View view) {
-            super(view);
-            mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
-        }
-
-        @Override
-        public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+        public ViewHolder(View itemView) {
+            super(itemView);
+            name = (TextView) itemView.findViewById(R.id.name);
         }
     }
 }

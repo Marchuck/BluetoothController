@@ -1,11 +1,5 @@
 package pl.agh.kamil.bluetoothcontroller;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Set;
-import java.util.UUID;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -25,9 +19,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Set;
+import java.util.UUID;
 /**
  * Created by Kamil on 2016-01-06.
  */
@@ -62,7 +61,7 @@ public class Main extends Activity implements SensorEventListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Core.setCurrentContext(this);
+
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {
@@ -169,40 +168,7 @@ public class Main extends Activity implements SensorEventListener {
                                 // Toast.LENGTH_LONG).show();
                                 // }
                                 // });
-                                final TextView textView = (TextView) ((Activity) Core
-                                        .getCurrentContext())
-                                        .findViewById(R.id.status_text);
-                                textView.setText(data);
-                                final ImageView view = (ImageView) ((Activity) Core
-                                        .getCurrentContext())
-                                        .findViewById(R.id.status_image);
-                                if (data.length() != 0) {
-                                    if (data.equals("a")) {
-                                        Core.setLastLight('a');
-                                        view.setImageResource(R.drawable.onn);
-                                    } else if (data.equals("b")) {
-                                        Core.setLastLight('b');
-                                        view.setImageResource(R.drawable.off);
-                                    } else if (data.equals("c")) {
-                                        Core.setLastSound('c');
-                                        view.setImageResource(android.R.drawable.ic_delete);
-                                    } else if (data.equals("d")) {
-                                        Core.setLastSound('d');
-                                        view.setImageResource(R.drawable.a_sound_down);
-                                    } else if (data.equals("e")) {
-                                        Core.setLastGate('e');
-                                        view.setImageResource(R.drawable.a_sound_down);
-                                    } else if (data.equals("f")) {
-                                        Core.setLastGate('f');
-                                        view.setImageResource(android.R.drawable.ic_delete);
-                                    } else if (data.equals("g")) {
-                                        Core.setLastBlinds('g');
-                                        view.setImageResource(R.drawable.a_sound_down);
-                                    } else if (data.equals("h")) {
-                                        Core.setLastBlinds('h');
-                                        view.setImageResource(android.R.drawable.ic_delete);
-                                    }
-                                }
+
                             }
                         });
                     }
@@ -313,8 +279,7 @@ public class Main extends Activity implements SensorEventListener {
             case CONNECTED:
                 mTextState.setTextColor(Color.BLUE);
                 mTextState.setText("Połączony z " + mDevice.getName());
-                Core.setCommunication(mConnectedThread);
-                break;
+                 break;
             case DISCONNECTED:
                 mTextState.setTextColor(Color.BLACK);
                 mTextState.setText("Rozłączony");

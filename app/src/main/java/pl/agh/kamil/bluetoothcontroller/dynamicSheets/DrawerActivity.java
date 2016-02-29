@@ -4,25 +4,35 @@ import android.bluetooth.BluetoothDevice;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import pl.agh.kamil.bluetoothcontroller.R;
 import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.LaunchBluetoothFragment;
 import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.LeftItemsFragment;
+import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.controllerFragments.GateFragment;
+import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.controllerFragments.Lights1Fragment;
+import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.controllerFragments.LightsFragment;
+import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.controllerFragments.MediaFragment;
 import pl.agh.kamil.bluetoothcontroller.dynamicSheets.utils.CustomDrawerListener;
+import pl.agh.kamil.bluetoothcontroller.dynamicSheets.utils.ItemToControl;
 import pl.lukmarr.blueduff.BlueDuff;
 import pl.lukmarr.blueduff.BlueInterfaces;
 
 public class DrawerActivity extends AppCompatActivity {
-
+    public static final String TAG = DrawerActivity.class.getSimpleName();
     @Bind(R.id.drawerLayout)
     DrawerLayout drawerLayout;
 
     public BlueDuff blueDuff;
-    View progressIndicator;
+
+    @Bind(R.id.progressBar)
+    ProgressBar progressIndicator;
 
     private LeftItemsFragment leftItemsFragment;
 
@@ -50,8 +60,8 @@ public class DrawerActivity extends AppCompatActivity {
 
     private void setupDrawer() {
         drawerLayout.setDrawerElevation(10f);
-//        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.LEFT);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.RIGHT);
+//        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.LEFT);
         drawerLayout.setDrawerListener(new CustomDrawerListener() {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -74,19 +84,19 @@ public class DrawerActivity extends AppCompatActivity {
     }
 
     public void connectToDevice(BluetoothDevice device) {
+        progressIndicator.setVisibility(View.VISIBLE);
         blueDuff.connectToDevice(device, new BlueInterfaces.OnConnectedCallback() {
             @Override
             public void onConnected() {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.LEFT);
+                        progressIndicator.setVisibility(View.GONE);
                         setupLeftDrawer();
                         drawerLayout.openDrawer(Gravity.LEFT);
-                        progressIndicator.setVisibility(View.GONE);
                     }
                 });
-                blueDuff.writeData("ADAŚ WAŁEK".getBytes());
+                blueDuff.writeData(new byte[]{'?'});
             }
         }, new BlueInterfaces.DataReceivedCallback() {
             @Override
@@ -97,6 +107,19 @@ public class DrawerActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        if (blueDuff != null) {
+            blueDuff.closeStreams(new BlueInterfaces.OnSocketKilledCallback() {
+                @Override
+                public void onSocketKilled() {
+                    Toast.makeText(DrawerActivity.this, "Disconnected", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+        super.onBackPressed();
+    }
+
     private void setupLeftDrawer() {
         if (leftItemsFragment == null) {
             leftItemsFragment = LeftItemsFragment.newInstance();
@@ -105,5 +128,26 @@ public class DrawerActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.leftContent, leftItemsFragment)
                 .commitAllowingStateLoss();
+    }
+
+    public void switchToFragment(ItemToControl itemToControl) {
+        Log.d(TAG, "switchToFragment: ");
+        android.support.v4.app.Fragment fr;
+        String name = itemToControl.name;
+        if (name.equals("lights")) {
+            fr = GateFragment.newInstance();
+        } else if (name.equals("lights")) {
+            fr = LightsFragment.newInstance();
+        } else if (name.equals("media")) {
+            fr = MediaFragment.newInstance();
+        } else if (name.equals("gate")) {
+            fr = GateFragment.newInstance();
+        } else {
+            fr = Lights1Fragment.newInstance();
+        }
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content, fr).commitAllowingStateLoss();
+        drawerLayout.closeDrawer(Gravity.LEFT);
     }
 }

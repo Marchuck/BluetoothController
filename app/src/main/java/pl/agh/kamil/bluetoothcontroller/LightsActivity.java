@@ -15,14 +15,7 @@ public class LightsActivity  extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lights);
-        mConnectedThread = Core.getCommunication();
-        Core.setCurrentContext(this);
-        char ch = Core.getLastBlinds();
-        ImageView view = (ImageView)findViewById(R.id.status_image);
-        if (ch == 'a')
-            view.setImageResource(R.drawable.onn);
-        else if(ch=='b')
-            view.setImageResource(R.drawable.off);
+         ImageView view = (ImageView)findViewById(R.id.status_image);
 
 
         Button btn = (Button) findViewById(R.id.light_button_on);

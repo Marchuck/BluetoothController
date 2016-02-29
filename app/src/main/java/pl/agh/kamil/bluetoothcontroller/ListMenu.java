@@ -1,8 +1,5 @@
 package pl.agh.kamil.bluetoothcontroller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +8,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 /**
  * Created by Kamil on 2016-01-06.
  */
@@ -19,9 +20,7 @@ public class ListMenu extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
-        Core.setCurrentContext(this);
-        Core.setLastBlinds('h');
-        setResult(Activity.RESULT_CANCELED);
+         setResult(Activity.RESULT_CANCELED);
 
         final ListView listview = (ListView) findViewById(R.id.listView1);
         final String[] values = new String[]{

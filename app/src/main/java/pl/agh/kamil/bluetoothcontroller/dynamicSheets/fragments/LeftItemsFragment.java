@@ -8,22 +8,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import java.util.Collections;
 
 import pl.agh.kamil.bluetoothcontroller.R;
-import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.dummy.DummyContent;
-import pl.agh.kamil.bluetoothcontroller.dynamicSheets.fragments.dummy.DummyContent.ItemToControl;
+import pl.agh.kamil.bluetoothcontroller.dynamicSheets.DrawerActivity;
+import pl.agh.kamil.bluetoothcontroller.dynamicSheets.utils.ItemToControl;
 
 public class LeftItemsFragment extends Fragment {
 
-    public interface ListInterface {
-        void onClicked(ItemToControl item);
+    public DrawerActivity asDrawerActivity(){
+        return ((DrawerActivity)getActivity());
     }
 
-    public void bindWithData(byte[] data) {
-        if (controllerAdapter!=null){
-            controllerAdapter.bindWithData(data);
-        }
+    public void bindWithData(final byte[] data) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (controllerAdapter != null) {
+                    controllerAdapter.bindWithData(data);
+                }
+            }
+        });
     }
 
     ControllerAdapter controllerAdapter;
@@ -50,12 +56,14 @@ public class LeftItemsFragment extends Fragment {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            controllerAdapter = new ControllerAdapter(DummyContent.ITEMS, new ListInterface() {
-                @Override
-                public void onClicked(ItemToControl item) {
-                    Toast.makeText(LeftItemsFragment.this.getActivity(), "clicked " + item, Toast.LENGTH_SHORT).show();
-                }
-            });
+            controllerAdapter = new ControllerAdapter(Collections.<ItemToControl>emptyList(),
+                    new ControllerAdapter.SendValueCallback() {
+                        @Override
+                        public void sendState(ItemToControl itemToControl) {
+                            //Toast.makeText(LeftItemsFragment.this.getActivity(), "clicked " + item, Toast.LENGTH_SHORT).show();
+                            asDrawerActivity().switchToFragment(itemToControl);
+                        }
+                    });
             recyclerView.setAdapter(controllerAdapter);
         }
         return view;

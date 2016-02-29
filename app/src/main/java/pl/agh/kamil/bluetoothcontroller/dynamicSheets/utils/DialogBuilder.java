@@ -12,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import pl.agh.kamil.bluetoothcontroller.R;
  * @since 29.02.16
  */
 public class DialogBuilder {
+    public static final String TAG = DialogBuilder.class.getSimpleName();
 
     public interface SelectItemCallback {
         void onClicked(BluetoothDevice device);
@@ -114,7 +116,10 @@ public class DialogBuilder {
 
         @Override
         public void onBindViewHolder(final VH holder, final int position) {
-            holder.textView.setText(dataSet.get(position).getName());
+            BluetoothDevice device = dataSet.get(position);
+            Log.d(TAG, "onBindViewHolder: " + device.getAddress());
+            holder.textView.setText(device.getName());
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

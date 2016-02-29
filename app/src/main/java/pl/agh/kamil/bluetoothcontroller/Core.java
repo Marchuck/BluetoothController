@@ -1,66 +1,55 @@
 package pl.agh.kamil.bluetoothcontroller;
 
 import android.app.Application;
-import android.content.Context;
-import android.util.Log;
+
+import pl.lukmarr.blueduff.BlueDuff;
 
 /**
  * Created by Kamil on 2016-01-06.
  */
 public class Core extends Application {
-    private static Main.ConnectedThread communicationThread = null;
-    private static Context currentContext = null;
-    private static char lastLight = 'b';
-    private static char lastGate = 'f';
-    private static char lastBlinds = 'h';
-    private static char lastSound = 'd';
+    private char lastLight = 'b';
+    private char lastGate = 'f';
+    private char lastBlinds = 'h';
+    private char lastSound = 'd';
+    public static Core instance;
+    public BlueDuff blueDuff;
 
-
-    public static Context getCurrentContext() {
-        return currentContext;
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        instance = this;
     }
 
-    public static void setCurrentContext(Context currentContext) {
-        Core.currentContext = currentContext;
-    }
-
-    public static Main.ConnectedThread getCommunication() {
-        Log.d("CORE", "get connected thread");
-        return communicationThread;
-    }
-
-    public static void setCommunication(Main.ConnectedThread c) {
-        communicationThread = c;
-    }
-    public static char getLastLight() {
+    public char getLastLight() {
         return lastLight;
     }
 
-    public static void setLastLight(char lastLight) {
-        Core.lastLight = lastLight;
+    public void setLastLight(char lastLight) {
+        Core.instance.lastLight = lastLight;
     }
 
-    public static char getLastGate() {
+    public char getLastGate() {
         return lastGate;
     }
 
-    public static void setLastGate(char lastGate) {
-        Core.lastGate = lastGate;
+    public void setLastGate(char lastGate) {
+        Core.instance.lastGate = lastGate;
     }
 
-    public static char getLastBlinds() {
+    public char getLastBlinds() {
         return lastBlinds;
     }
 
-    public static void setLastBlinds(char lastBlinds) {
-        Core.lastBlinds = lastBlinds;
+    public void setLastBlinds(char lastBlinds) {
+        Core.instance.lastBlinds = lastBlinds;
     }
 
-    public static char getLastSound() {
+    public char getLastSound() {
         return lastSound;
     }
 
-    public static void setLastSound(char lastSound) {
-        Core.lastSound = lastSound;
+    public void setLastSound(char lastSound) {
+        Core.instance.lastSound = lastSound;
     }
 }
